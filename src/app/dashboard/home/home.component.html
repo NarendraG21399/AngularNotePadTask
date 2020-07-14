@@ -1,0 +1,27 @@
+<app-password-popup  *ngIf="showModel" [notepad]="selectedList" (onclosed)="validate($event)"></app-password-popup>
+<div class="w3-black"  >
+    <div class="w3-container w3-content w3-padding-64" style="max-width:1450px">
+        <h2 class="w3-wide w3-center">YOUR NOTES</h2>
+        <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+            <div class="w3-third w3-margin-bottom" *ngFor="let note of notepadList;trackBy:trackByNoteId">
+                <div class="w3-container w3-white" >
+                    <span  class="delete" > <i  *ngIf="note.isLock" class="fa fa-lock tooltip"> <span class="tooltiptext">File Lock</span></i> <i  (click)="delete(note)" class="fa fa-trash"></i></span>
+                     <p><i class="fa fa-file"></i> <b>   {{note.title}}</b></p>
+                    <p>Create Date: {{note.create | date}}</p>
+                    <p>Modified Date: {{note.modified | date:'medium'}}</p>
+                    <div class="btn">
+                    <button class="w3-button w3-black w3-margin-bottom" (click)="navigate(note)">EDIT <i *ngIf="note.isLock" class="fa fa-lock"></i></button>
+                    </div>   
+                </div>
+            </div> 
+        </div>
+        <div  *ngIf="!notepadList.length" class="w3-panel w3-white w3-display-container">
+            <div class="w3-container w3-center">
+            <h3>You do not have any notes</h3>
+            <p>please create a note</p>
+            <a  [routerLink]="['/creteNotepad']" class=" w3-button w3-black w3-margin-bottom w3-center" >Create Note</a>
+            </div>
+          </div>
+    </div>
+</div> 
+ 

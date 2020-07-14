@@ -1,0 +1,17 @@
+<div class="modal"> 
+    <form class="modal-content animate" (ngSubmit)="onSubmit()" [formGroup]="FormGroup" autocomplete="off">
+      <div class="imgcontainer">
+        <span class="close" title="Close Modal" (click)="close()">&times;</span>
+      </div>
+      <div class="container">
+        <label for="Name"><b>Enter file Name</b></label>
+        <input type="text" placeholder="Please enter file Name" name="Name" formControlName="Name" >
+        <div class="error" *ngIf="isSubmit &&  f?.errors?.required">FileName is required</div>
+        <div class="error" *ngIf="isSubmit &&  f?.errors?.minlength">FileName must be at least 2 characters</div>
+        <button type="button" (click)="onSubmit()">ok</button>
+        <button type="button" (click)="close()">cancel</button>
+      </div>
+    </form>
+</div>
+  
+   
