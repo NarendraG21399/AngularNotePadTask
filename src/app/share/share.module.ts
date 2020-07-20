@@ -17,5 +17,6 @@ import { PasswordPopupComponent } from './component/password-popup/password-popu
     ReactiveFormsModule,
   ],
   exports : [ToasterComponent, NotepadSaveComponent, PasswordPopupComponent, FormsModule],
+  entryComponents:[PasswordPopupComponent]
 })
 export class ShareModule { }

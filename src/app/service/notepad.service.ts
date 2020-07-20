@@ -23,20 +23,11 @@ export class NotepadService {
     localStorage.setItem('notepadlist', JSON.stringify(this.notepadList));
   }
   public delete(id: number) {
-    const notepadList = this.notepadList.filter((ele) => ele.id !== id);
-    this.notepadList = notepadList;
+    const notepadlist = this.notepadList.filter((ele) => ele.id !== id);
+    this.notepadList = notepadlist;
     this.setLocalstrorage();
   }
   public getNotepad(id: number): Notepad {
     return this.getList().find((data) => data.id === id);
-  }
-  public updateNotepad(id: number, text: string, islock: boolean): void {
-    this.notepadList.forEach((ele) => {
-      if (ele.id === id) {
-        (ele.text = text), (ele.modified = new Date());
-        ele.isLock = islock;
-      }
-    });
-    this.setLocalstrorage();
   }
 }
