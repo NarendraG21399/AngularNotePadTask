@@ -83,4 +83,7 @@ public createNotepad(notepad?: Notepad){
   notepad ? componentRef.instance.notepad =  notepad : null;
   componentRef.instance.viewContainerRef = this.viewContainerRef;
 }
+public export(note: Notepad): void {
+  this.notepadservice.exportTotextFile(note);
+}
 }

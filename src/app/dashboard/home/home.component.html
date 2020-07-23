@@ -12,7 +12,8 @@
                           <a  class="w3-bar-item w3-button" *ngIf="!note.isLock" (click)="lock(note)">Lock</a>
                           <a   class="w3-bar-item w3-button" *ngIf="note.isLock" (click)="unlock(note)">Unlock</a>
                           <a   class="w3-bar-item w3-button" (click)="edit(note)">Edit</a>
-                          <a   class="w3-bar-item w3-button" (click)="delete(note)">delete</a>
+                          <a   class="w3-bar-item w3-button" (click)="export(note)">Export</a>
+                          <a   class="w3-bar-item w3-button" (click)="delete(note)">Delete</a>
                         </div>
                       </div>
                     <span  class="delete" > <i  *ngIf="note.isLock" class="fa fa-lock tooltip"> <span class="tooltiptext">File Lock</span></i>  </span>
@@ -28,7 +29,7 @@
             <div class="w3-third w3-margin-bottom "  *ngIf="notepadList.length">
                
                 <div class="w3-container w3-white add ">
-                    <h3>Crete Note</h3>
+                    <h3>Create Note</h3>
                     <button class="w3-button w3-large w3-circle w3-xlarge w3-ripple w3-teal middle" (click)="createNotepad()"> +</button>
                 </div>
             </div>

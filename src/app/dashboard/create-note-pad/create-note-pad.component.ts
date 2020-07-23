@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit,   ViewContainerRef  } from '@angular/core';
+
+
 import { Notepad } from 'src/app/model/notepad.model';
 import { NotepadService } from 'src/app/service/notepad.service';
 import { CONSTANT } from 'src/app/constant/app.constant';
@@ -43,6 +45,7 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
 
   private updateNoted() {
     this.notepadservice.setLocalstrorage();
+    this.export();
     this.showtoaster(CONSTANT.FILE_UPDATE__MESSAGE);
   }
   public lockNotepad(): void {
@@ -83,4 +86,8 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
   public closeModal(): void{
     this.viewContainerRef.clear();
   }
+  export() {
+    this.notepadservice.exportTotextFile(this.notepad);
+  }
+
 }

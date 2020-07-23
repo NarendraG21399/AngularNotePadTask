@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { saveAs } from 'file-saver';
 import { Notepad } from '../model/notepad.model';
 
 @Injectable({
@@ -29,5 +30,10 @@ export class NotepadService {
   }
   public getNotepad(id: number): Notepad {
     return this.getList().find((data) => data.id === id);
+  }
+
+  public exportTotextFile(data: Notepad ){
+    const blob = new Blob([ data.text]);
+    saveAs(blob,  data.title);
   }
 }
