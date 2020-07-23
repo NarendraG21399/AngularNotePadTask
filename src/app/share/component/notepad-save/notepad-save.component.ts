@@ -14,7 +14,7 @@ export class NotepadSaveComponent implements OnInit {
 
   ngOnInit(): void {
     this.FormGroup = new FormGroup({
-      Name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      Name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]),
     });
   }
   get f() {
