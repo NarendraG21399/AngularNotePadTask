@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit,   ViewContainerRef  } from '@angular/core';
 import { Notepad } from 'src/app/model/notepad.model';
-import { ActivatedRoute } from '@angular/router';
 import { NotepadService } from 'src/app/service/notepad.service';
 import { CONSTANT } from 'src/app/constant/app.constant';
 @Component({
@@ -15,18 +14,15 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
   public isSaveNotepad: boolean;
   public toaster: boolean;
   public message: string;
+  public viewContainerRef: ViewContainerRef;
   constructor(
-    private activatedRoute: ActivatedRoute,
     private notepadservice: NotepadService
   ) {
-    this.activatedRoute.params.subscribe((params) => {
-      this.notepad.id = +params.id;
-    });
   }
 
   ngOnInit(): void {
     if ( this.notepad.id ) {
-      this.notepad = this.notepadservice.getNotepad( this.notepad.id );
+      this.notepad = this.notepadservice.getNotepad(this.notepad.id);
     }
   }
   ngAfterViewInit(): void {
@@ -52,11 +48,9 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
   public lockNotepad(): void {
     this.notepad.id ? this.password = true : this.showtoaster(CONSTANT.FILE_SAVE);
   }
-  public savePassword(event): void {
+  public savePassword(event: string): void {
     this.password = false;
     if (event) {
-      this.notepad.isLock = true;
-      this.notepad.password = event;
       this.notepadservice.setLocalstrorage();
       this.showtoaster(CONSTANT.FILE_LOCK_MESSAGE);
     }
@@ -77,5 +71,16 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
       this.notepadservice.setLocalstrorage();
       this.showtoaster(CONSTANT.FILE_UNLOCK_MESSAGE);
     }
+  }
+  public onChange(fileList: FileList): void {
+    const file = fileList[0];
+    const fileReader: FileReader = new FileReader();
+    fileReader.onloadend = (x) => {
+      this.notepad.text = fileReader.result as string;
+    };
+    fileReader.readAsText(file);
+  }
+  public closeModal(): void{
+    this.viewContainerRef.clear();
   }
 }

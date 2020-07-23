@@ -1,27 +1,46 @@
+<app-navbar (createNotepad)="createNotepad()"></app-navbar>
 <app-password-popup  *ngIf="showModel" [notepad]="selectedList" (onclosed)="validate($event)"></app-password-popup>
-<div class="w3-black"  >
+ <div class="w3-black"  >
     <div class="w3-container w3-content w3-padding-64" style="max-width:1450px">
         <h2 class="w3-wide w3-center">YOUR NOTES</h2>
         <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
             <div class="w3-third w3-margin-bottom" *ngFor="let note of notepadList;trackBy:trackByNoteId">
                 <div class="w3-container w3-white" >
-                    <span  class="delete" > <i  *ngIf="note.isLock" class="fa fa-lock tooltip"> <span class="tooltiptext">File Lock</span></i> <i  (click)="delete(note)" class="fa fa-trash"></i></span>
+                    <div class="w3-dropdown-hover w3-white">
+                        <div class="test"></div>
+                        <div class="w3-dropdown-content w3-bar-block w3-border ">
+                          <a  class="w3-bar-item w3-button" *ngIf="!note.isLock" (click)="lock(note)">Lock</a>
+                          <a   class="w3-bar-item w3-button" *ngIf="note.isLock" (click)="unlock(note)">Unlock</a>
+                          <a   class="w3-bar-item w3-button" (click)="edit(note)">Edit</a>
+                          <a   class="w3-bar-item w3-button" (click)="delete(note)">delete</a>
+                        </div>
+                      </div>
+                    <span  class="delete" > <i  *ngIf="note.isLock" class="fa fa-lock tooltip"> <span class="tooltiptext">File Lock</span></i>  </span>
                      <p><i class="fa fa-file"></i> <b>   {{note.title}}</b></p>
                     <p>Create Date: {{note.create | date}}</p>
                     <p>Modified Date: {{note.modified | date:'medium'}}</p>
                     <div class="btn">
-                    <button class="w3-button w3-black w3-margin-bottom" (click)="navigate(note)">EDIT <i *ngIf="note.isLock" class="fa fa-lock"></i></button>
+                    <button class="w3-button w3-black w3-margin-bottom " (click)="edit(note)">EDIT <i *ngIf="note.isLock" class="fa fa-lock"></i></button>
                     </div>   
                 </div>
             </div>
+
+            <div class="w3-third w3-margin-bottom " >
+               
+                <div class="w3-container w3-white add ">
+                    <h3>Crete Note</h3>
+                    <button class="w3-button w3-large w3-circle w3-xlarge w3-ripple w3-teal middle" (click)="createNotepad()"> +</button>
+                </div>
+            </div>
+
         </div>
         <div  *ngIf="!notepadList.length" class="w3-panel w3-white w3-display-container">
             <div class="w3-container w3-center">
              <h3>YOU DO NOT HAVE ANY NOTES</h3>
             <p>please create a note</p>
-            <a  [routerLink]="['/creteNotepad']" class=" w3-button w3-black w3-margin-bottom w3-center" >Create Note</a>
+            <a  (click)="createNotepad()" class=" w3-button w3-black w3-margin-bottom w3-center" >Create Note</a>
             </div>
           </div>
     </div>
+    <app-password-popup *ngIf="password" [notepad]="selectedList" [fromCreateNote]="true" (onclosed)="savePassword($event)"></app-password-popup>
 </div> 
- 

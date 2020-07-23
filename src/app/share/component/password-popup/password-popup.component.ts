@@ -30,6 +30,8 @@ export class PasswordPopupComponent implements OnInit {
   public onSubmit(): void {
     this.isSubmit = true;
     if (this.fromCreateNote && this.FormGroup.valid) {
+      this.notepad.isLock = true;
+      this.notepad.password = this.FormGroup.value.password;
       this.close(this.FormGroup.value.password);
     } else if (
       !this.fromCreateNote &&

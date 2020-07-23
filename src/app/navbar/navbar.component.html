@@ -1,13 +1,13 @@
 <div class="w3-top">
     <div class="w3-bar w3-black w3-card">
         <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
-            href="javascript:void(0)" (click)="myFunction()" title="Toggle Navigation Menu"><i
+            href="javascript:void(0)" (click)="menu()" title="Toggle Navigation Menu"><i
                 class="fa fa-bars"></i></a>
-        <a [routerLink]="['/']" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-        <a [routerLink]="['/creteNotepad']" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CREATE NOTE</a>
+        <a   class="w3-bar-item w3-button w3-padding-large">HOME</a>
+        <a  (click)="navigate()" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CREATE NOTE</a>
     </div>
 </div>
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-    <a [routerLink]="['/creteNotepad']" class="w3-bar-item w3-button w3-padding-large" (click)="myFunction()">CREATE NOTE</a>
+    <a  (click)="navigate()" class="w3-bar-item w3-button w3-padding-large" >CREATE NOTE</a>
 </div>
  

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { Notepad } from '../../model/notepad.model';
 import { NotepadService } from 'src/app/service/notepad.service';
 import { Router } from '@angular/router';
 import { CONSTANT, ROUTINGPATH } from 'src/app/constant/app.constant';
+import { CreateNotePadComponent } from '../create-note-pad/create-note-pad.component';
+import { flatten } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,9 @@ export class HomeComponent implements OnInit {
   public notepadList: Notepad[];
   public showModel = false;
   public selectedList: Notepad;
-  constructor(private notepadservice: NotepadService, private router: Router) { }
+  public password: boolean;
+  constructor(private notepadservice: NotepadService, private router: Router,
+              public viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
     this.getNotepadList();
@@ -29,13 +33,11 @@ export class HomeComponent implements OnInit {
       this.selectedList = notepad;
       return;
     }
-    this.notepadservice.isAuthenticate = true;
-    this.router.navigate([ROUTINGPATH.EDIT_NOTEPAD, notepad.id]);
   }
   public validate(data?): void {
     if (data) {
       this.notepadservice.isAuthenticate = true;
-      this.router.navigate([ROUTINGPATH.EDIT_NOTEPAD, this.selectedList.id]);
+      this.createNotepad(this.selectedList);
     }
     this.showModel = false;
   }
@@ -47,5 +49,38 @@ export class HomeComponent implements OnInit {
   }
   public trackByNoteId(index: number, notepad: Notepad): number {
     return notepad.id;
+}
+public lock(note: Notepad): void{
+  this.selectedList = note;
+  this.password = true;
+ 
+}
+public savePassword(note){
+  this.password = false;
+  if (note){
+  this.notepadservice.setLocalstrorage();
+  }
+}
+public unlock(note: Notepad): void{
+  if (confirm(CONSTANT.CONFIRM_MESSAGE)) {
+    note.isLock = false;
+    note.password = null;
+    this.notepadservice.setLocalstrorage();
+  }
+}
+public edit(note: Notepad){
+  if (note.isLock) {
+    this.showModel = true;
+    this.selectedList = note;
+    return;
+  }
+  this.createNotepad(note);
+}
+public createNotepad(notepad?: Notepad){
+  this.viewContainerRef.clear();
+  const cFactory = this.componentFactoryResolver.resolveComponentFactory(CreateNotePadComponent);
+  const componentRef = this.viewContainerRef.createComponent(cFactory);
+  notepad ? componentRef.instance.notepad =  notepad : null;
+  componentRef.instance.viewContainerRef = this.viewContainerRef;
 }
 }

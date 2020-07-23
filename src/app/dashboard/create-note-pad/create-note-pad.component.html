@@ -1,16 +1,40 @@
-<div class="container">
-    <div class="btn">
-        <p *ngIf="notepad.title"><b>File Name: {{notepad.title}}</b></p>
-        <button class="w3-button w3-black w3-margin-bottom w3-teal" (click)="saveNotepad()">Save</button>
-        <button class="w3-button w3-black w3-margin-bottom w3-teal" *ngIf="notepad.isLock" (click)="unLock()">Unlock
-        </button>
-        <button class="w3-button w3-black w3-margin-bottom w3-teal" *ngIf="!notepad.isLock"
-            (click)="lockNotepad()">Lock</button>
+<div class="w3-container">
+    <div class="w3-modal">
+        <div class="w3-modal-content">
+            <header class="w3-container w3-teal">
+                <span (click)="closeModal()" class="w3-button w3-display-topright">&times;</span>
+                <div class="btn">
+                    <label class="w3-section w3-teal w3-margin-left">import file: </label><input
+                        class="w3-section w3-teal w3-margin-left" type="file"
+                        (change)="onChange($event.target.files)" />
+                    <p *ngIf="notepad.title">
+                        <b>File Name: {{ notepad.title }}</b>
+                    </p>
+                    <button class="w3-button w3-grey w3-section w3-teal" (click)="saveNotepad()">
+                        Save
+                    </button>
+                    <button class="w3-button w3-grey w3-section w3-teal w3-margin-left" *ngIf="notepad.isLock"
+                        (click)="unLock()">
+                        Unlock
+                    </button>
+                    <button class="w3-button w3-grey w3-section w3-teal w3-margin-left " *ngIf="!notepad.isLock"
+                        (click)="lockNotepad()">
+                        Lock
+                    </button>
+                </div>
+            </header>
+            <div class="w3-container w3-margin">
+                <form role="form" accept-charset="UTF-8">
+                    <textarea #autofocus [(ngModel)]="notepad.text" [ngModelOptions]="{ standalone: true }"></textarea>
+                </form>
+            </div>
+            <app-password-popup *ngIf="password" [fromCreateNote]="true" (onclosed)="savePassword($event)"
+                [notepad]="notepad">
+            </app-password-popup>
+            <app-notepad-save *ngIf="isSaveNotepad" (saveNotePad)="createNotePad($event)"></app-notepad-save>
+            <footer class="w3-container w3-teal">
+                <app-toaster *ngIf="toaster" [message]="message"></app-toaster>
+            </footer>
+        </div>
     </div>
-    <form role="form" accept-charset="UTF-8">
-        <textarea #autofocus [(ngModel)]="notepad.text" [ngModelOptions]="{standalone: true}"></textarea>
-    </form>
 </div>
-<app-password-popup *ngIf="password" [fromCreateNote]="true" (onclosed)="savePassword($event)"></app-password-popup>
-<app-notepad-save *ngIf="isSaveNotepad" (saveNotePad)="createNotePad($event)"></app-notepad-save>
-<app-toaster *ngIf="toaster" [message]="message"></app-toaster>

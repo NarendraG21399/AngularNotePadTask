@@ -1,6 +1,7 @@
 .container {
   margin-top: 3rem;
   height: 900px;
+  
 }
 form {
   height: 800px;
@@ -19,8 +20,13 @@ textarea {
   display: flex;
   justify-content: center;
   color: white;
+  flex-wrap: wrap;
 }
 p {
   color: white;
   margin-right: 60px;
+   
+}
+.w3-modal{
+  display: block;
 }
