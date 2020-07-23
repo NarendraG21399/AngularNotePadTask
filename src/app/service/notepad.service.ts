@@ -33,7 +33,7 @@ export class NotepadService {
   }
 
   public exportTotextFile(data: Notepad ){
-    const blob = new Blob([ data.text]);
+    const blob = new Blob([ data.text || '']);
     saveAs(blob,  data.title);
   }
 }
