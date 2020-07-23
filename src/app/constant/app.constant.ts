@@ -6,6 +6,3 @@ export const CONSTANT = {
     FILE_UPDATE__MESSAGE: 'File Updated Sucessfully',
     FILE_SAVE: 'Please save file'
 };
-export const ROUTINGPATH = {
-    EDIT_NOTEPAD: 'editNotepad'
-};

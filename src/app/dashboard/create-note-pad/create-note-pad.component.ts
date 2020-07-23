@@ -1,5 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit,   ViewContainerRef  } from '@angular/core';
-
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  ViewContainerRef,
+} from '@angular/core';
 
 import { Notepad } from 'src/app/model/notepad.model';
 import { NotepadService } from 'src/app/service/notepad.service';
@@ -7,7 +13,7 @@ import { CONSTANT } from 'src/app/constant/app.constant';
 @Component({
   selector: 'app-create-note-pad',
   templateUrl: './create-note-pad.component.html',
-  styleUrls: ['./create-note-pad.component.scss']
+  styleUrls: ['./create-note-pad.component.scss'],
 })
 export class CreateNotePadComponent implements OnInit, AfterViewInit {
   @ViewChild('autofocus') focus: ElementRef;
@@ -17,13 +23,10 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
   public toaster: boolean;
   public message: string;
   public viewContainerRef: ViewContainerRef;
-  constructor(
-    private notepadservice: NotepadService
-  ) {
-  }
+  constructor(private notepadservice: NotepadService) {}
 
   ngOnInit(): void {
-    if ( this.notepad.id ) {
+    if (this.notepad.id) {
       this.notepad = this.notepadservice.getNotepad(this.notepad.id);
     }
   }
@@ -31,7 +34,7 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
     this.focus.nativeElement.focus();
   }
   public saveNotepad(): void {
-    this.notepad.id ?  this.updateNoted() : this.isSaveNotepad = true;
+    this.notepad.id ? this.updateNoted() : (this.isSaveNotepad = true);
   }
   public createNotePad(event) {
     this.isSaveNotepad = false;
@@ -45,11 +48,12 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
 
   private updateNoted() {
     this.notepadservice.setLocalstrorage();
-    this.export();
     this.showtoaster(CONSTANT.FILE_UPDATE__MESSAGE);
   }
   public lockNotepad(): void {
-    this.notepad.id ? this.password = true : this.showtoaster(CONSTANT.FILE_SAVE);
+    this.notepad.id
+      ? (this.password = true)
+      : this.showtoaster(CONSTANT.FILE_SAVE);
   }
   public savePassword(event: string): void {
     this.password = false;
@@ -83,11 +87,7 @@ export class CreateNotePadComponent implements OnInit, AfterViewInit {
     };
     fileReader.readAsText(file);
   }
-  public closeModal(): void{
+  public closeModal(): void {
     this.viewContainerRef.clear();
   }
-  export() {
-    this.notepadservice.exportTotextFile(this.notepad);
-  }
-
 }
